@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testing
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: testing
+  template:
+    metadata:
+      labels:
+        app: testing
+    spec:
+      containers:
+      - name: testing
+        image: noicecurse.jfrog.io/default-docker-local/keshav-statusneo/sample:1
+        ports:
+        - containerPort: 8090
+      imagePullSecrets:
+        - name: jfrog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testing
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8090
+  selector:
+    app: testing
